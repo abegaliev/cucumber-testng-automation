@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.app.utilities.ConfigurationReader;
@@ -23,7 +24,9 @@ public class APIDay3_GSON {
 		Response response = given().accept(ContentType.JSON)
 		.when().get(ConfigurationReader.getProperty("hrapp.baseresturl")+"/employees/120");
 		
-		Map<String,String> map =	response.as(HashMap.class);
+		Assert.assertEquals(response.getStatusCode(), 200, "Status Code Verification vailed:");
+		
+		Map<String,String> map = response.as(HashMap.class);
 		
 		System.out.println(map.keySet());
 		System.out.println(map.values());
@@ -33,7 +36,7 @@ public class APIDay3_GSON {
 
 	}
 	
-	@Test
+//	@Test
 	public void convertJsonToListOfMaps() {
 		Response response = given().accept(ContentType.JSON)
 				.when().get(ConfigurationReader.getProperty("hrapp.baseresturl")+"/departments");
